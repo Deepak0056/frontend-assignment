@@ -33,7 +33,7 @@ const Hamburger = () => {
       >
         <a href="/">Home</a>
         <a href="/products">Products</a>
-        <a href="/">Add to cart</a>
+        <a href="/search">Search</a>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import Products from "./components/Products";
 import Search from "./pages/Search";
 import Footer from "./components/Footer";
 
+
 const App = () => {
   return (
     <>

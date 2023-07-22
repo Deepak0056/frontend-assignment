@@ -8,7 +8,6 @@ import Products from "./components/Products";
 import Search from "./pages/Search";
 import Footer from "./components/Footer";
 
-
 const App = () => {
   return (
     <>
@@ -21,19 +20,11 @@ const App = () => {
             path="/individualProduct"
             element={<IndividualProduct />}
           />
-          <Route
-            exact
-            path="/products"
-            element={<Products />}
-          />
-          <Route
-            exact
-            path="/search"
-            element={<Search />}
-          />
+          <Route exact path="/products" element={<Products />} />
+          <Route exact path="/search" element={<Search />} />
           <Route exact path="/addToCart" element={<AddToCart />} />
         </Routes>
-        <Footer/>
+        <Footer />
       </BrowserRouter>
     </>
   );

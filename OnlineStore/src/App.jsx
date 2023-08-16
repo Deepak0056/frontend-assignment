@@ -15,11 +15,12 @@ const App = () => {
         <Nav />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route
+          {/* <Route
             exact
             path="/individualProduct"
             element={<IndividualProduct />}
-          />
+          /> */}
+          <Route path="/individualProduct/:productId" element={<IndividualProduct />} />
           <Route exact path="/products" element={<Products />} />
           <Route exact path="/search" element={<Search />} />
           <Route exact path="/addToCart" element={<AddToCart />} />

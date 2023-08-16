@@ -1,50 +1,83 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 import Rating from "../components/Rating";
 import { ChatIcon, Icon, StarIcon } from "@chakra-ui/icons";
-import { Avatar } from "@chakra-ui/react";
+
 const IndividualProduct = () => {
   const rating = 3.5;
+  const paramsId = useParams();
+  const id = paramsId.productId;
+
+  const [products, setProducts] = useState([]); // State to store the fetched products
+  const [error, setError] = useState(null); // State to store any errors during the API request
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get("https://fakestoreapi.com/products");
+      setProducts(response.data); // Set the fetched products in the state
+    } catch (error) {
+      // Create a more informative error object
+      setError({
+        message: "An error occurred while fetching products.",
+        originalError: error, // Store the original error for debugging if needed
+      });
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts(); // Fetch products when the component mounts
+  }, []);
+
+  console.log(id);
+
+  // Check if products array is empty or the required index is out of bounds
+  if (products.length === 0 || id >= products.length) {
+    return "Loading"; // You can show a loading indicator or handle the loading state in another way
+  }
+
+  const product = products[id]; // Get the product data
+
   return (
     <div className="flex flex-col justify-center items-center gap-4  px-16 py-8">
-      <div className="flex flex-col sm:flex-row gap-8">
-        <div className="flex flex-col items-center gap-8">
-          <h2 className="font-semibold text-[34px] ">{product[0].title}</h2>
-          <div className="border-2 rounded-lg w-full flex justify-center p-2 sm:p-8">
+      <div className="flex flex-col sm:flex-row gap-8 justify-around ">
+        <div className="flex flex-col items-center gap-8 w-[50%]">
+          <h2 className="font-semibold text-[34px] ">{products[id].title}</h2>
+          <div className="border-2 rounded-lg w-[60%] flex justify-center p-2 sm:p-8">
             <img
-              src={product[0].image}
-              alt=""
+              src={products[id].image}
+              alt="Image"
               className="w-[170px] h-[170px] px-4"
             />
           </div>
-          <p className="font-semibold text-[24px]">Rs. {product[0].price}</p>
+          <p className="font-semibold text-[24px]">Rs. {products[id].price}</p>
         </div>
-        <div className="flex flex-col gap-4 py-4 ">
-          <div>
+        <div className="flex flex-col gap-4 py-4  w-[50%]">
+          <div className="w-[90%]">
             <h3 className="hidden sm:block text-[28px] font-semibold">
               Description
             </h3>
-            <p className="italic text-[18px]">{product[0].description}</p>
+            <p className="italic text-[18px]"> {products[id].description}</p>
           </div>
-          <div>
+          <div className="flex flex-col gap-2">
             <h3 className="hidden sm:block text-[24px] font-semibold">
               Rating
             </h3>
             <p className="italic text-[18px] font-semibold flex flex-col gap-2">
               <p className="flex gap-4">
                 <p className="flex gap-1 items-center">
-                  {product[0].rating.rate}
+                {products[id].rating.rate}
                   <StarIcon boxSize={12} color="blue" />
                 </p>
                 <p className="flex gap-1 items-center">
-                  {product[0].rating.count}
+                {products[id].rating.count}
                   <Icon as={ChatIcon} viewBox="0 0 50 50"
                   boxSize={12} color="blue">
                   </Icon>
                 </p>
               </p>
-              <Rating rating={parseFloat(product[0].rating.rate)} />
+              <Rating rating={parseFloat(products[id].rating.rate)} />
             </p>
           </div>
         </div>

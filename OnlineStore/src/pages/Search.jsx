@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Icon, StarIcon } from '@chakra-ui/icons';
-import { SearchIcon } from '@chakra-ui/icons';
+import React, { useState } from "react";
+import { Icon, StarIcon } from "@chakra-ui/icons";
+import { SearchIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
 const Search = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const products = [
     {
       id: 1,
@@ -98,7 +99,7 @@ const Search = () => {
   };
 
   const filterProductsByPrice = (query) => {
-    const priceRange = query.split('-');
+    const priceRange = query.split("-");
     const minPrice = parseFloat(priceRange[0].trim());
     const maxPrice = parseFloat(priceRange[1].trim());
 
@@ -109,7 +110,7 @@ const Search = () => {
 
   const handleSearchByTitleAndPrice = (event) => {
     const query = event.target.value;
-    const hasPriceFilter = query.includes('-');
+    const hasPriceFilter = query.includes("-");
     if (hasPriceFilter) {
       const filteredProducts = filterProductsByPrice(query);
       setFilteredProducts(filteredProducts);
@@ -139,7 +140,8 @@ const Search = () => {
       <div className="h-[67vh] border-2 flex flex-col gap-6 p-6 overflow-y-scroll shadow-lg md:p-10 lg:p-16">
         {filteredProducts.map((product) => {
           return (
-            <div
+            <Link
+              to={`/individualProduct/${product.id - 1}`}
               key={product.id}
               className="flex justify-around hover:scale-105 md:items-center gap-8 border-2 p-2 rounded-lg bg-slate-50 hover:bg-slate-100 shadow-md"
             >
@@ -151,14 +153,14 @@ const Search = () => {
               <h4 className="w-[200px] h-[28px] overflow-hidden font-semibold">
                 {product.title}
               </h4>
-              <p className='text-[12px] sm:text-base'>
+              <p className="text-[12px] sm:text-base">
                 {" "}
                 <span className="text-red-600">Rs</span>. {product.price}
               </p>
               <p className="flex items-center gap-1">
                 {product.rating.rate} <StarIcon boxSize={12} color="blue" />{" "}
               </p>
-            </div>
+            </Link>
           );
         })}
       </div>

@@ -111,7 +111,7 @@ const Products = () => {
             </p>
             <div className="flex justify-end w-full">
               <Link
-                to="/individualProduct"
+                to={`/individualProduct/${product.id-1}`}
                 className="bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded-lg p-2"
               >
                 Read More
